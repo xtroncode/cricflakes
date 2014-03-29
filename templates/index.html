@@ -25,11 +25,11 @@ $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
           
           $.getJSON($SCRIPT_ROOT + '/_get_scores',function(data){
           //var matches=data.mchdata.match
-            $('ul.grid').html("");
-            $('ul.slides').html("");
+            $('ul.grid').html("<li class='grid-sizer'></li>");
+           
           $.each(data.details,function(index,element){
             $('ul.grid').append(element);
-            $('ul.slides').append(element);
+            
           });
         });
                                   };
@@ -49,23 +49,9 @@ $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 				<section class="grid-wrap">
 					<ul class="grid">
 						<li class="grid-sizer"></li><!-- for Masonry column width -->
-						
-						
 					</ul>
 				</section><!-- // grid-wrap -->
-				<section class="slideshow">
-					<ul class="slides">
-						
-						
-					</ul>
-					<nav>
-						<span class="icon nav-prev"></span>
-						<span class="icon nav-next"></span>
-						<span class="icon nav-close"></span>
-					</nav>
-					<div class="info-keys icon">Navigate with arrow keys</div>
-				</section><!-- // slideshow -->
-			</div><!-- // grid-gallery -->
+							</div><!-- // grid-gallery -->
 		</div>
     <script src="{{ url_for('static',filename='js/imagesloaded.pkgd.min.js')}}"></script>
     <script src="{{ url_for('static',filename='js/masonry.pkgd.min.js')}}"></script>
