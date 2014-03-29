@@ -45,8 +45,9 @@ box-shadow:         0px 0px 10px 0px rgba(218, 48, 90, 0.74);}
   margin-left:10px;
 }
 .score{
-font-size:2em;
-  font-weight:3px;
+  font-size:2.5em;
+  font-weight:bolder;
+  margin:0.5em 10px 0.5em;
 }
 
 /*  media queries (reduce number of columns) */
