@@ -80,12 +80,20 @@ class CricbuzzParser():
         if mtype == "TEST":
             return None
         match_desc = match["@mchDesc"]
-        mground = match["@grnd"]
+        mnum=match['@mnum']
         states = match["state"]
         match_cstate = states["@mchState"]
         mstatus = states["@status"]
         if mstatus.startswith("Starts") or mstatus.startswith("Coming"):
           return None       #Match hasn't started Yet.
+        if match_cstate=="Result":
+          mom=match['manofthematch']
+          mom_num_player=int(mom['@NoOfPlayers'])
+          mom_pname=""
+          for i in range(mom_num_player):
+            mom_pname+=mom['mom']['@Name']
+          html="<li><p>{0} | {1} | {2}</p><p>{3} : {4}</p><p>Man of the Match: {5}</p></li>".format(series,mtype,match_desc,match_cstate,mstatus,mom_pname)
+          return html
         try:
             batting_team = match['mscr']["btTm"]
             bowling_team = match['mscr']["blgTm"]
@@ -113,7 +121,7 @@ class CricbuzzParser():
         except Exception:
             # The opponent team hasn't yet started to Bat.
             pass
-        html="<li><p>{0}</p><p>{1}</p><p>{2}</p><p>{3}</p><p>{4}</p><p>{5}</p><p class='score'>{6}-{7} / {8} ovrs</p></li>".format(series,mtype,match_desc,match_cstate,mstatus,batting_team_name,bat_runs,bat_wkts,bat_overs)
+        html="<li><p>{0} | {1} | {2}<p>{3} | {4}<p class='score'>{5}:{6}-{7} / {8} ovrs</p></li>".format(series,mtype,match_desc,match_cstate,mstatus,batting_team_name,bat_runs,bat_wkts,bat_overs)
         return html
 if __name__ == '__main__':
     cric = CricbuzzParser()
