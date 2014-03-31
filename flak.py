@@ -15,7 +15,7 @@ def get_scores():
     o=cache.get('scores')
     if o is None:
       cric = CricbuzzParser()
-      match = cric.getXml()
+      match = cric.getJson()
       details = cric.handleMatches(match) #Returns Match details as a Dictionary. Parse it according to requirements.
       o={'details':details}
       cache.set('scores',o,timeout=15)

@@ -9,10 +9,10 @@ except:
 class CricbuzzParser():
     
     def __init__(self):
-        # self.getXml(url)
+       
         pass
        
-    def getXml(self):
+    def getJson(self):
         #Change coding here
         f = urllib2.urlopen("http://synd.cricbuzz.com/j2me/1.0/livematches.xml")
         doc = xmltodict.parse(f)
@@ -84,6 +84,7 @@ class CricbuzzParser():
         states = match["state"]
         match_cstate = states["@mchState"]
         mstatus = states["@status"]
+        inngCnt=match['@inngCnt']
         if mstatus.startswith("Starts") or mstatus.startswith("Coming"):
           return None       #Match hasn't started Yet.
         if match_cstate=="Result":
@@ -92,7 +93,7 @@ class CricbuzzParser():
           mom_pname=""
           for i in range(mom_num_player):
             mom_pname+=mom['mom']['@Name']
-          html="<li><p>{0} | {1} | {2}</p><p>{3} : {4}</p><p>Man of the Match: {5}</p></li>".format(series,mtype,match_desc,match_cstate,mstatus,mom_pname)
+          html="<li><p>{0} | {1} | {2} | {6}</p><p>{3} : {4}</p><p>Man of the Match: {5}</p></li>".format(series,mtype,match_desc,match_cstate,mstatus,mom_pname,mnum)
           return html
         try:
             batting_team = match['mscr']["btTm"]
@@ -103,17 +104,7 @@ class CricbuzzParser():
             bat_runs = innings["@r"]
             bat_overs = innings["@ovrs"]
             bat_wkts = innings["@wkts"]
-        except Exception:
-            #Match is comple. Only Result is availabe now and btTm tag has been changed to Tm
-            #So, now only status of the match is important. Initialize none to other parameters.
-            batting_team = None
-            bowling_team = None
-            batting_team_name = None
-            bowling_team_name = None
-            innings = None
-            bat_runs = None
-            bat_overs = None
-            bat_wkts = None
+        
         try:
             bowl_runs = bowling_team['Inngs']["@r"]
             bowl_overs = bowling_team['Inngs']["@ovrs"]
@@ -121,7 +112,11 @@ class CricbuzzParser():
         except Exception:
             # The opponent team hasn't yet started to Bat.
             pass
-        html="<li><p>{0} | {1} | {2}<p>{3} | {4}<p class='score'>{5}:{6}-{7} / {8} ovrs</p></li>".format(series,mtype,match_desc,match_cstate,mstatus,batting_team_name,bat_runs,bat_wkts,bat_overs)
+        html="<li><p>{0} | {1} | {2}<p>{3} | {4}<p>Batting:</p><p class='score'>{5}:{6}-{7} / {8} ovrs</p>".format(series,mtype,match_desc,match_cstate,mstatus,batting_team_name,bat_runs,bat_wkts,bat_overs)
+        if inngCnt==2:
+          html+="<p>Bowling:</p><p class='score'>{0}:{1}-{2} / {3} ovrs</p></li>".format(bowling_team_name,bowl_runs,bowl_wkts,bowl_overs)
+        else:
+          html+="</li>"
         return html
 if __name__ == '__main__':
     cric = CricbuzzParser()
