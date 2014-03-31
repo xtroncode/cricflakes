@@ -122,7 +122,7 @@ class CricbuzzParser():
         return html
 if __name__ == '__main__':
     cric = CricbuzzParser()
-    match = cric.getXml()
+    match = cric.getJson()
     details = cric.handleMatches(match) #Returns Match details as a Dictionary. Parse it according to requirements.
     details={'details':details}
     details=json.dumps(details)
