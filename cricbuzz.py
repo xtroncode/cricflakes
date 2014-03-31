@@ -104,7 +104,9 @@ class CricbuzzParser():
             bat_runs = innings["@r"]
             bat_overs = innings["@ovrs"]
             bat_wkts = innings["@wkts"]
-        
+        except Exception:
+            
+            pass
         try:
             bowl_runs = bowling_team['Inngs']["@r"]
             bowl_overs = bowling_team['Inngs']["@ovrs"]
