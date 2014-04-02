@@ -84,7 +84,10 @@ class CricbuzzParser():
         states = match["state"]
         match_cstate = states["@mchState"]
         mstatus = states["@status"]
-        inngCnt=match['@inngCnt']
+        try:
+          inngCnt=match['@inngCnt']
+        except Exception :
+          pass
         if mstatus.startswith("Starts") or mstatus.startswith("Coming"):
           return None       #Match hasn't started Yet.
         if match_cstate=="Result":
@@ -114,8 +117,8 @@ class CricbuzzParser():
         except Exception:
             # The opponent team hasn't yet started to Bat.
             pass
-        html="<li><p>{0} | {1} | {2}<p>{3} | {4}<p>Batting:</p><p class='score'>{5}:{6}-{7} / {8} ovrs</p>".format(series,mtype,match_desc,match_cstate,mstatus,batting_team_name,bat_runs,bat_wkts,bat_overs)
-        if inngCnt=='2':
+        html="<li><p>{0} | {1} | {2}<p>{3} | {4} | {9}<p>Batting:</p><p class='score'>{5}:{6}-{7} / {8} ovrs</p>".format(series,mtype,match_desc,match_cstate,mstatus,batting_team_name,bat_runs,bat_wkts,bat_overs,mnum)
+        if inngCnt=='2' or not inngCnt:
           html+="<p>Bowling:</p><p class='score'>{0}:{1}-{2} / {3} ovrs</p></li>".format(bowling_team_name,bowl_runs,bowl_wkts,bowl_overs)
         else:
           html+="</li>"
