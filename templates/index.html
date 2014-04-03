@@ -19,24 +19,7 @@ $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 </script>
     
     <script>
-    $(document).ready(
-      function(){
-        var updatepage =function(){ 
-          
-          $.getJSON($SCRIPT_ROOT + '/_get_scores',function(data){
-          //var matches=data.mchdata.match
-            $('ul.grid').html("<li class='grid-sizer'></li>");
-           
-          $.each(data.details,function(index,element){
-            $('ul.grid').append(element);
-            
-          });
-        });
-                                  };
-      updatepage();
-      setInterval(updatepage,5000)
-        
-      });
+    
       
     
     </script>
@@ -45,22 +28,26 @@ $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 	<body>
 		<div class="container">
       <header class="clearfix"><h1>Cric Flakes</h1></header>
-			<div id="grid-gallery" class="grid-gallery">
+
 				<section class="grid-wrap">
 					<ul class="grid">
-						<li class="grid-sizer"></li><!-- for Masonry column width -->
+					
 					</ul>
 				</section><!-- // grid-wrap -->
-							</div><!-- // grid-gallery -->
+							
 		</div>
-    <script src="{{ url_for('static',filename='js/imagesloaded.pkgd.min.js')}}"></script>
+    
     <script src="{{ url_for('static',filename='js/masonry.pkgd.min.js')}}"></script>
     <script src="{{ url_for('static',filename='js/classie.js')}}"></script>
+     <script src="{{ url_for('static',filename='js/script.js')}}"></script>
     
     <script>
-    var $container = $('#container');
+    var $container = $('.grid');
 // initialize Masonry after all images have loaded  
-$container.imagesLoaded( function() {
-  $container.masonry();});</script>     
+
+  $container.masonry({
+   
+    itemSelector:'.card'
+  });</script>     
 	</body>
 </html>

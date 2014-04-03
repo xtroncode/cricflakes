@@ -10,7 +10,7 @@
 } /* Made with http://icomoon.io/app */
 
 /* General style */
-.grid-gallery ul {
+ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -29,7 +29,7 @@
 }
 
 .grid li {
-	width: 50%;
+	width:33.33%;
 	float: left;
 	cursor: pointer;
   -webkit-box-shadow: 3px 3px 12px 0px rgba(124, 103, 25, 0.5);
