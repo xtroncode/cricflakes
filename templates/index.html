@@ -12,7 +12,12 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/demo.css')}}" />
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/component.css')}}" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-   
+  
+<script>
+if (!window.jQuery) {
+  document.write("<script src='{{url_for('static',filename='js/jquery.js')}}'><\/script>");
+}
+</script>
     <script src="{{ url_for('static',filename='js/modernizr.custom.js')}}"></script>
      <script type=text/javascript>
 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
